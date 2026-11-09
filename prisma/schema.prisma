@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Kelas {
+  id         Int     @id @default(autoincrement())
+  nama_kelas String  @unique
+  siswa      Siswa[]
+}
+
+model Siswa {
+  id      Int    @id @default(autoincrement())
+  nis     Int    @unique
+  nama    String
+  kelasId Int
+  kelas   Kelas  @relation(fields: [kelasId], references: [id], onDelete: Cascade)
+}
